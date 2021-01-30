@@ -8,14 +8,13 @@ class BinaryIndexedTree:
 
     def add(self, i, x):
         #assert 0 <= i < self.size
-        #array[i] += x
-        self.array[i] += x
+        #self.array[i] += x
         i += 1
         while i <= self.size:
             self.data[i] += x
             i += i & -i
 
-    # return sum(array[0:i])
+    # return sum(self.array[0:i])
     def sum_left(self, i):
         #assert 0 <= i <= self.size
         res = 0
