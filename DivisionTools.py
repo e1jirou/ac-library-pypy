@@ -1,7 +1,7 @@
 # divisors(12) == [1,2,3,4,6,12]
 # O(sqrt(n))
 def divisors(n):
-    # assert 1 <= n
+    #assert 1 <= n
     lis = []
     for i in range(1, n+1):
         if i * i >= n:
@@ -20,7 +20,7 @@ def divisors(n):
 # prime_factorization(60) == [(2,2),(3,1),(5,1)]
 # O(sqrt(n))
 def prime_factorization(n):
-    # assert 1 <= n
+    #assert 1 <= n
     lis = []
     for p in range(2, n+1):
         if p * p > n:
@@ -39,7 +39,7 @@ def prime_factorization(n):
 # prime_numbers(n) == [p | (p ∈ prime numbers) and p < n]
 # prime_numbers(10) == [2,3,5,7]
 def prime_numbers(n):
-    # assert 3 <= n
+    #assert 3 <= n
     lis = [2]
     for i in range(3, n, 2):
         for p in lis:
@@ -54,7 +54,7 @@ def prime_numbers(n):
 # a*x + b*y == gcd(a,b)
 # return gcd(a,b), x, y
 def ext_Euclid(a, b):
-    # assert 1 <= a and 1 <= b
+    #assert 1 <= a and 1 <= b
     if b > 0:
         gcd_ab, x, y = ext_Euclid(b,a%b)
         return gcd_ab, y, x-(a//b)*y
