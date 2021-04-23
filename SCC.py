@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 # Strongly Connected Components
+# 0-indexed
 
 def scc(edges, reversed_edges, store_edges=True):
     #assert len(edges) == len(reversed_edges)
