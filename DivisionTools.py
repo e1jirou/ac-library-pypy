@@ -17,11 +17,11 @@ def divisors(n):
     return lis
 
 
-# prime_factorization(60) == [(2,2),(3,1),(5,1)]
+# prime_factorization(60) == {2:2, 3:1, 5:1}
 # O(sqrt(n))
 def prime_factorization(n):
     #assert 1 <= n
-    lis = []
+    dic = dict()
     for p in range(2, n+1):
         if p * p > n:
             break
@@ -30,10 +30,19 @@ def prime_factorization(n):
             while n % p == 0:
                 cnt += 1
                 n //= p
-            lis.append((p, cnt))
+            dic[p] = cnt
     if n > 1:
-        lis.append((n, 1))
-    return lis
+        dic[n] = 1
+    return dic
+
+
+def dic_mult_dic(dic1, dic2):
+    for key, value in dic2.items():
+        if key in dic1:
+            dic1[key] += value
+        else:
+            dic1[key] = value
+    return dic1
 
 
 # prime_numbers(n) == [p | (p ∈ prime numbers) and p < n]
