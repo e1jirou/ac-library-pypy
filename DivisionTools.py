@@ -36,7 +36,10 @@ def prime_factorization(n):
     return dic
 
 
-def dic_mult_dic(dic1, dic2):
+#dict_mult_dict({2:1,3:2}, {3:1,5:2}) == {2:1, 3:3, 5:2}
+def dict_mult_dict(dic1, dic2):
+    if len(dic1) < len(dic2):
+        dic1, dic2 = dic2, dic1
     for key, value in dic2.items():
         if key in dic1:
             dic1[key] += value
