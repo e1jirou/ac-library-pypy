@@ -1,15 +1,10 @@
-from copy import deepcopy
-
 # Strongly Connected Components
 # 0-indexed
-
-def scc(edges, reversed_edges, store_edges=True):
+def scc(edges, reversed_edges):
     #assert len(edges) == len(reversed_edges)
-    if store_edges:
-        edges = deepcopy(edges)
     n = len(edges)
-    
     # correct orientations
+    edge_indexes = [len(edges[node]) for node in range(n)]
     order = [0] * n
     order_idx = 0
     parents = [-1] * n
@@ -17,8 +12,9 @@ def scc(edges, reversed_edges, store_edges=True):
         if not parents[node]+1:
             parents[node] = n
             while n - node:
-                if edges[node]:
-                    new_node = edges[node].pop()
+                if edge_indexes[node]:
+                    edge_indexes[node] -= 1
+                    new_node = edges[node][edge_indexes[node]]
                     if not parents[new_node]+1:
                         parents[new_node] = node
                         node = new_node
@@ -26,7 +22,6 @@ def scc(edges, reversed_edges, store_edges=True):
                     order[order_idx] = node
                     order_idx += 1
                     node = parents[node]
-
     # reversed orientations
     groups = []
     seen = [1] * n
