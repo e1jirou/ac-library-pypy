@@ -1,7 +1,8 @@
 # Strongly Connected Components
 # 0-indexed
+
 def scc(edges, reversed_edges):
-    #assert len(edges) == len(reversed_edges)
+    assert len(edges) == len(reversed_edges)
     n = len(edges)
     # correct orientations
     edge_indexes = [len(edges[node]) for node in range(n)]

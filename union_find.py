@@ -6,7 +6,7 @@ class UnionFind:
         self.n = n
         self.parents = [-1] * n
 
-    # return the parent of x
+    # find will return the parent of x
     def find(self, x):
         path = []
         while self.parents[x] >= 0:
@@ -27,28 +27,28 @@ class UnionFind:
         self.parents[x] += self.parents[y]
         self.parents[y] = x
 
-    # return the size of the group of x
+    # size will return the size of the group of x
     def size(self, x):
         return -self.parents[self.find(x)]
 
-    # return whether x and y in a same group
+    # same will return whether x and y in a same group
     def same(self, x, y):
         return self.find(x) == self.find(y)
 
-    # return [all nodes which is in the group of x]
+    # members will return [all nodes which is in the group of x]
     def members(self, x):
         root = self.find(x)
         return [i for i in range(self.n) if self.find(i) == root]
 
-    # return [all roots]
+    # roots will return [all roots]
     def roots(self):
         return [i for i, x in enumerate(self.parents) if x < 0]
 
-    # return the number of groups
+    # group_count will return the number of groups
     def group_count(self):
         return len(self.roots())
 
-    # return {root: members of the group}
+    # all_group_members will return {root: [members of the group]}
     def all_group_members(self):
         dic = dict()
         for i in range(self.n):
@@ -59,6 +59,6 @@ class UnionFind:
                 dic[p] = [i]
         return dic
 
-    # return [sizes of all groups]
+    # all_sizes will return [sizes of all groups]
     def all_sizes(self):
         return [-x for x in self.parents if x < 0]

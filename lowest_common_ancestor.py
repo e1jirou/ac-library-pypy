@@ -1,5 +1,6 @@
 # Lowest Common Ancestor
 # 0-indexed
+
 class LowestCommonAncestor:
     def __init__(self, edges):
         self.n = len(edges)

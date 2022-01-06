@@ -15,7 +15,7 @@ class BinaryIndexedTree:
             self.data[i] += x
             i += i & -i
 
-    # sum_left returns sum(self.array[0:i])
+    # sum_left will return sum(self.array[0:i])
     def sum_left(self, i):
         assert 0 <= i <= self.size
         res = 0
@@ -24,7 +24,7 @@ class BinaryIndexedTree:
             i -= i & -i
         return res
 
-    # sum_range returns sum(array[left:right])
+    # sum_range will return sum(array[left:right])
     def sum_range(self, left, right):
         assert 0 <= left <= right <= self.size
         return self.sum_left(right) - self.sum_left(left)
