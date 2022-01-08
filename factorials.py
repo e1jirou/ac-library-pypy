@@ -8,7 +8,7 @@ def comb(n, r):
 
 
 class Factorials:
-    def __init__(self, n=10**6, mod=10**9+7):
+    def __init__(self, n, mod):
         self.mod = mod
 
         # self.fac[i] ≡ i! (factorial:階乗)
