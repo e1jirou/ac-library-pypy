@@ -64,7 +64,8 @@ def prime_numbers(n):
 
 
 class Eratosthenes:
-    def init(self, n):
+    def __init__(self, n):
+        self.n = n
         self.sieve = [0] * n
         self.prime = [2]
         for i in range(2, n, 2):
@@ -80,6 +81,7 @@ class Eratosthenes:
                     break
 
     def prime_factorization(self, n):
+        assert n < self.n
         res = dict()
         while 1 < n:
             if self.sieve[n] not in res:
