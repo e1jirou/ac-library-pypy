@@ -63,6 +63,33 @@ def prime_numbers(n):
     return lis
 
 
+class Eratosthenes:
+    def init(self, n):
+        self.sieve = [0] * n
+        self.prime = [2]
+        for i in range(2, n, 2):
+            self.sieve[i] = 2
+        for i in range(3, n, 2):
+            for p in self.prime:
+                if i < p * p:
+                    self.sieve[i] = i
+                    self.prime.append(i)
+                    break
+                if i % p == 0:
+                    self.sieve[i] = p
+                    break
+
+    def prime_factorization(self, n):
+        res = dict()
+        while 1 < n:
+            if self.sieve[n] not in res:
+                res[self.sieve[n]] = 1
+            else:
+                res[self.sieve[n]] += 1
+            n //= self.sieve[n]
+        return res
+
+
 # a*x + b*y == gcd(a,b)
 # return gcd(a,b), x, y
 def ext_Euclid(a, b):
