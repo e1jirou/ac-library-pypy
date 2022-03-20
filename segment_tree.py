@@ -1,8 +1,10 @@
-# Reference: https://github.com/atcoder/ac-library/blob/master/atcoder/segtree.hpp
-#            https://github.com/atcoder/ac-library/blob/master/document_en/segtree.md
-#            https://github.com/atcoder/ac-library/blob/master/document_ja/segtree.md
-
 class SegmentTree():
+    """
+    Reference
+    https://github.com/atcoder/ac-library/blob/master/atcoder/segtree.hpp
+    https://github.com/atcoder/ac-library/blob/master/document_en/segtree.md
+    https://github.com/atcoder/ac-library/blob/master/document_ja/segtree.md
+    """
     def __init__(self, n, op, e):
         self.n = n
         self.op = op
