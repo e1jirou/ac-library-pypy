@@ -11,12 +11,12 @@ class Factorials:
     def __init__(self, n, mod):
         self.mod = mod
 
-        # self.fac[i] ≡ i! (factorial:階乗)
+        # self.fac[i] ≡ i!
         self.fac = [1] * (n+1)
         for i in range(2, n+1):
             self.fac[i] = self.fac[i-1] * i % mod
 
-        # self.rec[i] ≡ 1 / i! (reciprocal:逆数)
+        # self.rec[i] ≡ 1 / i!
         self.rec = [1] * (n+1)
         self.rec[n] = pow(self.fac[n], mod-2, mod)
         for i in range(n-1, 1, -1):
