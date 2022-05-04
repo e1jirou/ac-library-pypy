@@ -8,11 +8,9 @@ def divisors(n):
             if i * i == n:
                 lis.append(i)
             break
-
         if n % i == 0:
             lis.append(i)
             lis.append(n // i)
-
     lis.sort()
     return lis
 
