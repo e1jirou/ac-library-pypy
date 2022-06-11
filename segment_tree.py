@@ -20,7 +20,7 @@ class SegmentTree():
         assert len(array) <= self.n
         for i in range(len(array)):
             self.d[self.size + i] = array[i]
-        for i in reversed(range(1, self.size)):
+        for i in range(self.size - 1, 0, -1):
             self.update(i)
 
     def set(self, p, x):
