@@ -1,10 +1,6 @@
 from collections import deque
-from sys import setrecursionlimit
-setrecursionlimit(10**9)
-#from pypyjit import set_param
-#set_param('max_unroll_recursion=-1')
 
-class MaxFlow:
+class Dinic:
     """
     Reference
     https://github.com/atcoder/ac-library/blob/master/atcoder/maxflow.hpp
@@ -56,61 +52,65 @@ class MaxFlow:
         e.cap = new_cap - new_flow
         re.cap = new_flow
 
-    def flow(self, s, t, flow_limit):
+    def bfs(self, s, t):
+        self.level = [-1] * self.n
+        self.level[s] = 0
+        que = deque()
+        que.append(s)
+        while que:
+            v = que.popleft()
+            for e in self.g[v]:
+                if e.cap == 0 or self.level[e.to] >= 0:
+                    continue
+                self.level[e.to] = self.level[v] + 1
+                if e.to == t:
+                    return
+                que.append(e.to)
+
+    def dfs(self, s, t, up):
+        # This is not a recursion function.
+        todo = [t]
+        while todo:
+            v = todo[-1]
+            if v == s:
+                todo.pop()
+                res = up
+                for w in todo:
+                    e = self.g[w][self.it[w]]
+                    res = min(res, self.g[e.to][e.rev].cap)
+                for w in todo:
+                    e = self.g[w][self.it[w]]
+                    e.cap += res
+                    self.g[e.to][e.rev].cap -= res
+                return res
+            while self.it[v] < len(self.g[v]):
+                e = self.g[v][self.it[v]]
+                if self.level[v] <= self.level[e.to] or self.g[e.to][e.rev].cap == 0:
+                    self.it[v] += 1
+                    continue
+                else:
+                    todo.append(e.to)
+                    break
+            if todo[-1] == v:
+                todo.pop()
+                self.level[v] = self.n
+        return 0
+
+    def flow(self, s, t, flow_limit=1<<60):
         assert 0 <= s < self.n
         assert 0 <= t < self.n
         assert s != t
-        level = [-1] * self.n
-        it = [0] * self.n
-        que = deque()
-
-        def bfs():
-            level[s] = 0
-            que.clear()
-            que.append(s)
-            while que:
-                v = que.popleft()
-                for e in self.g[v]:
-                    if e.cap == 0 or level[e.to] >= 0:
-                        continue
-                    level[e.to] = level[v] + 1
-                    if e.to == t:
-                        return
-                    que.append(e.to)
-
-        def dfs(v, up):
-            if v == s:
-                return up
-            res = 0
-            level_v = level[v]
-            while it[v] < len(self.g[v]):
-                i = it[v]
-                it[v] += 1
-                e = self.g[v][i]
-                if level_v <= level[e.to] or self.g[e.to][e.rev].cap == 0:
-                    continue
-                d = dfs(e.to, min(up-res, self.g[e.to][e.rev].cap))
-                if d <= 0:
-                    continue
-                self.g[v][i].cap += d
-                self.g[e.to][e.rev].cap -= d
-                res += d
-                if res == up:
-                    return res
-            level[v] = self.n
-            return res
-
         flow = 0
         while flow < flow_limit:
-            level = [-1] * self.n
-            bfs()
-            if level[t] == -1:
+            self.bfs(s, t)
+            if self.level[t] == -1:
                 break
-            it = [0] * self.n
-            f = dfs(t, flow_limit - flow)
-            if not f:
-                break
-            flow += f
+            self.it = [0] * self.n
+            while flow < flow_limit:
+                f = self.dfs(s, t, flow_limit - flow)
+                if not f:
+                    break
+                flow += f
         return flow
 
     def min_cut(self, s):
