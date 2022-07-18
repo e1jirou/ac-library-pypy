@@ -68,7 +68,7 @@ class Dinic:
                 que.append(e.to)
 
     def dfs(self, s, t, up):
-        # This is not a recursion function.
+        # This is not a recursive function.
         todo = [t]
         while todo:
             v = todo[-1]
