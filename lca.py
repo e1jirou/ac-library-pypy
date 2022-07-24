@@ -1,6 +1,3 @@
-# Lowest Common Ancestor
-# 0-indexed
-
 class LowestCommonAncestor:
     def __init__(self, edges):
         self.n = len(edges)
@@ -41,10 +38,8 @@ class LowestCommonAncestor:
         for i in range((self.depths[a]-self.depths[b]).bit_length()):
             if self.depths[a]-self.depths[b] >> i & 1:
                 a = self.dbl[i][a]
-        
         if a == b:
             return a
-        
         for i in range(self.depths[a].bit_length())[::-1]:
             if self.dbl[i][a] == self.dbl[i][b]:
                 continue

@@ -33,4 +33,3 @@ class Factorials:
     # self.inv(n) ≡ 1 / n ≡ pow(n, mod-2, mod)
     def inv(self, n):
         return self.fac[n-1] * self.rec[n] % self.mod
-
