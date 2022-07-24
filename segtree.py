@@ -16,10 +16,10 @@ class SegmentTree():
     def update(self, k):
         self.d[k] = self.op(self.d[2*k], self.d[2*k + 1])
 
-    def build(self, array):
-        assert len(array) <= self.n
-        for i in range(len(array)):
-            self.d[self.size + i] = array[i]
+    def build(self, v):
+        assert len(v) <= self.n
+        for i in range(len(v)):
+            self.d[self.size + i] = v[i]
         for i in range(self.size - 1, 0, -1):
             self.update(i)
 
