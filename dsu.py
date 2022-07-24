@@ -48,9 +48,8 @@ class DisjointSetUnion:
         for i in range(self.n):
             leader_buf[i] = self.leader(i)
             group_size[leader_buf[i]] += 1
-        result = [[] for _ in range(self.n)]
+        result = [[0] * group_size[i] for i in range(self.n)]
         for i in range(self.n):
-            result[i] = [0] * group_size[i]
-        for i in range(self.n):
-            result[leader_buf[i]].append(i)
+            group_size[leader_buf[i]] -= 1
+            result[leader_buf[i]][group_size[leader_buf[i]]] = i
         return [v for v in result if v]
