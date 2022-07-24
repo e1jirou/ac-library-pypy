@@ -1,42 +1,44 @@
-# Strongly Connected Components
-# 0-indexed
-
-def scc(edges, reversed_edges):
-    assert len(edges) == len(reversed_edges)
+def scc(edges):
     n = len(edges)
-    # correct orientations
-    edge_indexes = [len(edges[node]) for node in range(n)]
-    order = [0] * n
-    order_idx = 0
-    parents = [-1] * n
-    for node in range(n):
-        if not parents[node]+1:
-            parents[node] = n
-            while n - node:
-                if edge_indexes[node]:
-                    edge_indexes[node] -= 1
-                    new_node = edges[node][edge_indexes[node]]
-                    if not parents[new_node]+1:
-                        parents[new_node] = node
-                        node = new_node
-                else:
-                    order[order_idx] = node
-                    order_idx += 1
-                    node = parents[node]
-    # reversed orientations
+    ids = [len(edges[u]) for u in range(n)]
+    visited = [0] * n
+    ord = [0] * n
+    label = n
+    for u in range(n):
+        if visited[u]:
+            continue
+        visited[u] = 1
+        path = [u]
+        while path:
+            u = path[-1]
+            if ids[u]:
+                ids[u] -= 1
+                v = edges[u][ids[u]]
+                if not visited[v]:
+                    visited[v] = 1
+                    path.append(v)
+            else:
+                label -= 1
+                ord[label] = u
+                path.pop()
+    r_edges = [[] for _ in range(n)]
+    for u in range(n):
+        for v in edges[u]:
+            r_edges[v].append(u)
     groups = []
-    seen = [1] * n
-    for start in order[::-1]:
-        if seen[start]:
-            seen[start] = 0
-            todo = [start]
-            group = [start]
-            while todo:
-                node = todo.pop()
-                for new_node in reversed_edges[node]:
-                    if seen[new_node]:
-                        seen[new_node] = 0
-                        todo.append(new_node)
-                        group.append(new_node)
-            groups.append(group[::-1])
+    visited = [0] * n
+    for u in ord:
+        if visited[u]:
+            continue
+        visited[u] = 1
+        group = [u]
+        idx = 0
+        while idx < len(group):
+            u = group[idx]
+            idx += 1
+            for v in r_edges[u]:
+                if not visited[v]:
+                    visited[v] = 1
+                    group.append(v)
+        groups.append(group)
     return groups
