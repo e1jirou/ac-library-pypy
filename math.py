@@ -102,9 +102,11 @@ def ext_Euclid(a, b):
 
 # return sum([(a*i + b)//m for i in range(n)])
 def floor_sum(n, m, a, b):
+    assert 0 <= n
+    assert 1 <= m
     ans = 0
     while True:
-        ans += ((a // m) * n * (n-1)) // 2 + (b // m) * n
+        ans += (a//m * n * (n-1))//2 + b//m * n
         a %= m
         b %= m
         if a*n + b < m:
@@ -113,4 +115,3 @@ def floor_sum(n, m, a, b):
         max_x = -(b - m*new_n) // a
         ans += (n - max_x) * new_n
         n, m, a, b = new_n, a, m, a*max_x - m*new_n + b
-
