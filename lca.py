@@ -44,5 +44,4 @@ class LowestCommonAncestor:
             if self.dbl[i][a] == self.dbl[i][b]:
                 continue
             a, b = self.dbl[i][a], self.dbl[i][b]
-        assert self.dbl[0][a] == self.dbl[0][b]
         return self.dbl[0][a]
