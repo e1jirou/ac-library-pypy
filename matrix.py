@@ -1,36 +1,26 @@
-mod = 998244353
+mod = 10**9 + 7
 
-# transpose([[1,2],[3,4]]) == [[1,3],[2,4]]
-def transpose(a):
-    res = [[0] * len(a) for _ in range(len(a[0]))]
-    for i in range(len(a)):
-        for j in range(len(a[0])):
-            res[j][i] = a[i][j]
-    return res
-
-# dot_t(a, b) == a @ transpose(b)
-def dot_t(a, b):
-    assert len(a[0]) == len(b[0])
-    res = [[0] * len(b) for _ in range(len(a))]
-    for i in range(len(a)):
-        for j in range(len(b)):
-            for k in range(len(a[0])):
-                res[i][j] += a[i][k] * b[j][k] % mod
-            res[i][j] %= mod
-    return res
-
-# dot(a, b) == a @ b
 def dot(a, b):
-    return dot_t(a, transpose(b))
+    assert len(a[0]) == len(b)
+    res = [[0] * len(a) for _ in range(len(b[0]))]
+    for i in range(len(a)):
+        a_i = a[i]
+        for j in range(len(b[i])):
+            tmp = 0
+            for k in range(len(b)):
+                tmp += a_i[k] * b[k][j]
+                tmp %= mod
+            res[i][j] = tmp
+    return res
 
 def matrix_power(a, exp):
+    assert len(a) == len(a[0])
     n = len(a)
-    a = transpose(a)
     res = [[0] * n for _ in range(n)]
     for i in range(n):
         res[i][i] = 1
     for i in reversed(range(exp.bit_length())):
         res = dot(res, res)
         if exp>>i & 1:
-            res = dot_t(res, a)
+            res = dot(res, a)
     return res
