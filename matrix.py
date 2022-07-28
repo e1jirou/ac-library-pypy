@@ -8,7 +8,7 @@ def transpose(a):
             res[j][i] = a[i][j]
     return res
 
-# dot_t(a, b) == a @ b.T
+# dot_t(a, b) == a @ transpose(b)
 def dot_t(a, b):
     assert len(a[0]) == len(b[0])
     res = [[0] * len(b) for _ in range(len(a))]
