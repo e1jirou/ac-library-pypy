@@ -1,7 +1,12 @@
-from sys import setrecursionlimit
-setrecursionlimit(1000000000)
-
 class StronglyConnectedComponents:
+    """
+    Reference
+    https://github.com/atcoder/ac-library/blob/master/atcoder/internal_csr.hpp
+    https://github.com/atcoder/ac-library/blob/master/atcoder/internal_scc.hpp
+    https://github.com/atcoder/ac-library/blob/master/atcoder/scc.hpp
+    https://github.com/atcoder/ac-library/blob/master/document_en/scc.md
+    https://github.com/atcoder/ac-library/blob/master/document_ja/scc.md
+    """
     def __init__(self, n):
         self.n = n
         self.edges = []
@@ -11,62 +16,80 @@ class StronglyConnectedComponents:
 
     def csr(self):
         # Compressed Sparse Row
-        self.start = [0] * (self.n + 1)
+        start = [0] * (self.n + 1)
         for u, _ in self.edges:
-            self.start[u + 1] += 1
+            start[u + 1] += 1
         for i in range(self.n):
-            self.start[i+1] += self.start[i]
-        counter = self.start.copy()
-        self.elist = [0] * len(self.edges)
+            start[i+1] += start[i]
+        counter = start.copy()
+        elist = [0] * len(self.edges)
         for u, v in self.edges:
-            self.elist[counter[u]] = v
+            elist[counter[u]] = v
             counter[u] += 1
-
-    def dfs(self, v):
-        self.low[v] = self.ord[v] = self.now_ord
-        self.now_ord += 1
-        self.visited[self.idx] = v
-        self.idx += 1
-        for i in range(self.start[v], self.start[v+1]):
-            to = self.elist[i]
-            if self.ord[to] == -1:
-                self.dfs(to)
-                self.low[v] = min(self.low[v], self.low[to])
-            else:
-                self.low[v] = min(self.low[v], self.ord[to])
-        if self.low[v] == self.ord[v]:
-            while True:
-                self.idx -= 1
-                u = self.visited[self.idx]
-                self.ord[u] = self.n
-                self.ids[u] = self.group_num
-                if u == v:
-                    break
-            self.group_num += 1
+        return start, elist
 
     def scc_ids(self):
-        self.csr()
-        self.now_ord = self.group_num = 0
-        self.visited = [0] * self.n
-        self.idx = 0
-        self.low = [0] * self.n
-        self.ord = [-1] * self.n
-        self.ids = [0] * self.n
+        # scc_ids does not contain a recursive function.
+        start, elist = self.csr()
+        now_ord = group_num = now_visited = now_stack = 0
+        visited = [0] * self.n
+        low = [0] * self.n
+        ord = [-1] * self.n
+        ids = [0] * self.n
+        stack = [0] * self.n
+        counter = start.copy()
         for i in range(self.n):
-            if self.ord[i] == -1:
-                self.dfs(i)
+            if ord[i] != -1:
+                continue
+            # dfs
+            low[i] = ord[i] = now_ord
+            now_ord += 1
+            visited[now_visited] = i
+            now_visited += 1
+            stack[now_stack] = i
+            now_stack += 1
+            while now_stack:
+                v = stack[now_stack - 1]
+                while counter[v] < start[v + 1]:
+                    to = elist[counter[v]]
+                    counter[v] += 1
+                    if ord[to] == -1:
+                        low[to] = ord[to] = now_ord
+                        now_ord += 1
+                        visited[now_visited] = to
+                        now_visited += 1
+                        stack[now_stack] = to
+                        now_stack += 1
+                        break
+                    else:
+                        low[v] = min(low[v], ord[to])
+                if stack[now_stack - 1] != v:
+                    continue
+                if low[v] == ord[v]:
+                    while True:
+                        now_visited -= 1
+                        u = visited[now_visited]
+                        ord[u] = self.n
+                        ids[u] = group_num
+                        if u == v:
+                            break
+                    group_num += 1
+                now_stack -= 1
+                if now_stack:
+                    low[stack[now_stack - 1]] = min(low[stack[now_stack - 1]], low[v])
         for i in range(self.n):
-            self.ids[i] = self.group_num - 1 - self.ids[i]
+            ids[i] = group_num - 1 - ids[i]
+        return group_num, ids
 
     def scc(self):
-        self.scc_ids()
-        counts = [0] * self.group_num
-        for x in self.ids:
+        group_num, ids = self.scc_ids()
+        counts = [0] * group_num
+        for x in ids:
             counts[x] += 1
-        groups = [[] for _ in range(self.group_num)]
-        for i in range(self.group_num):
+        groups = [[] for _ in range(group_num)]
+        for i in range(group_num):
             groups[i] = [0] * counts[i]
         for i in reversed(range(self.n)):
-            counts[self.ids[i]] -= 1
-            groups[self.ids[i]][counts[self.ids[i]]] = i
+            counts[ids[i]] -= 1
+            groups[ids[i]][counts[ids[i]]] = i
         return groups
