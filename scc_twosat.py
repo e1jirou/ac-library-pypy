@@ -93,3 +93,33 @@ class StronglyConnectedComponents:
             counts[ids[i]] -= 1
             groups[ids[i]][counts[ids[i]]] = i
         return groups
+
+
+class TwoSAT:
+    """
+    Reference
+    https://github.com/atcoder/ac-library/blob/master/atcoder/twosat.hpp
+    https://github.com/atcoder/ac-library/blob/master/document_en/twosat.md
+    https://github.com/atcoder/ac-library/blob/master/document_ja/twosat.md
+    """
+    def __init__(self, n):
+        self.n = n
+        self._answer = [False] * n
+        self.scc = StronglyConnectedComponents(2 * n)
+
+    def add_clause(self, i, f, j, g):
+        assert 0 <= i < self.n
+        assert 0 <= j < self.n
+        self.scc.add_edge(2 * i + 1 - f, 2 * j + g)
+        self.scc.add_edge(2 * j + 1 - g, 2 * i + f)
+
+    def satisfiable(self):
+        id = self.scc.scc_ids()[1]
+        for i in range(self.n):
+            if id[2 * i] == id[2 * i + 1]:
+                return False
+            self._answer[i] = id[2 * i] < id[2 * i + 1]
+        return True
+
+    def answer(self):
+        return self._answer
