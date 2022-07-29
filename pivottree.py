@@ -1,8 +1,12 @@
-class PivotTree: # Reference: https://qiita.com/Kiri8128/items/6256f8559f0026485d90
+class PivotTree:
+    """
+    Reference
+    https://qiita.com/Kiri8128/items/6256f8559f0026485d90
+    """
     def __init__(self, n=60):
         self.n = n
         self.root = self.node(1<<n, 1<<n)
-    
+
     def add(self, v): # vを追加する. vをすでに含む場合はエラー.
         v += 1
         nd = self.root
