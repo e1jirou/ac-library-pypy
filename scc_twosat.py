@@ -20,7 +20,7 @@ class StronglyConnectedComponents:
         for u, _ in self.edges:
             start[u + 1] += 1
         for i in range(self.n):
-            start[i+1] += start[i]
+            start[i + 1] += start[i]
         counter = start.copy()
         elist = [0] * len(self.edges)
         for u, v in self.edges:
