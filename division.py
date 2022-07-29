@@ -81,7 +81,6 @@ class Eratosthenes:
 # a*x + b*y == gcd(a,b)
 # return gcd(a,b), x, y
 def ext_Euclid(a, b):
-    #assert 1 <= a and 1 <= b
     if b > 0:
         gcd_ab, x, y = ext_Euclid(b,a%b)
         return gcd_ab, y, x - (a//b)*y
