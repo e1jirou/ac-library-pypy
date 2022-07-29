@@ -14,7 +14,7 @@ class StronglyConnectedComponents:
     def add_edge(self, fr, to):
         self.edges.append((fr, to))
 
-    def csr(self):
+    def __csr(self):
         # Compressed Sparse Row
         start = [0] * (self.n + 1)
         for u, _ in self.edges:
@@ -30,7 +30,7 @@ class StronglyConnectedComponents:
 
     def scc_ids(self):
         # scc_ids does not contain a recursive function.
-        start, elist = self.csr()
+        start, elist = self.__csr()
         now_ord = group_num = now_visited = now_stack = 0
         visited = [0] * self.n
         low = [0] * self.n
