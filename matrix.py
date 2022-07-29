@@ -1,6 +1,4 @@
-mod = 10**9 + 7
-
-def dot(a, b):
+def dot(a, b, mod):
     assert len(a[0]) == len(b)
     res = [[0] * len(a) for _ in range(len(b[0]))]
     for i in range(len(a)):
@@ -13,7 +11,7 @@ def dot(a, b):
             res[i][j] = tmp
     return res
 
-def matrix_power(a, exp):
+def matrix_power(a, exp, mod):
     assert len(a) == len(a[0])
     n = len(a)
     res = [[0] * n for _ in range(n)]
