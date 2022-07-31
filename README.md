@@ -1,4 +1,46 @@
 # PyPy AtCoder Library
 PyPy ユーザ向けに作成した競技プログラミング用のライブラリです.
 
-一部は [AtCoder Library](https://github.com/atcoder/ac-library) を参考にして実装しましたが, そうでないものも含まれています. AtCoder Library を網羅できるようにファイルを追加する予定です.
+[AtCoder Library](https://github.com/atcoder/ac-library) を参考にして実装したものもありますが, そうでないものも含まれています.
+
+## division
+整数演算に関するアルゴリズムの詰め合わせです.
+
+## dsu
+Disjoint Set Union と呼ばれるデータ構造です.
+
+## factorials
+階乗を前計算します.
+
+## fenwicktree
+Fenwick Tree と呼ばれるデータ構造です.
+
+## lazysegtree
+Lazy Segment Tree と呼ばれるデータ構造です.
+
+## lca
+Lowest Common Ancestor を求めます.
+
+## matrix
+行列累乗を計算します.
+
+## maxflow
+最大流を求めます.
+
+## mincostflow
+最小費用流を求めます.
+
+## pivottree
+Pivot Tree と呼ばれるデータ構造です.
+
+## popcount
+1が立っているビットを数えます.
+
+## scc_twosat
+強連結成分分解を行うものと 2-SAT を解くものが含まれています.
+
+## segtree
+Segment Tree と呼ばれるデータ構造です.
+
+## string
+文字列に関するアルゴリズムの詰め合わせです.
