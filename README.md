@@ -1,7 +1,7 @@
 # PyPy AtCoder Library
 PyPy ユーザ向けに作成した競技プログラミング用のライブラリです.
 
-[AtCoder Library](https://github.com/atcoder/ac-library) を参考にして実装したものもありますが, そうでないものも含まれています.
+[AtCoder Library](https://github.com/atcoder/ac-library) に含まれないライブラリもあります.
 
 ## division
 整数演算に関するアルゴリズムの詰め合わせです.
