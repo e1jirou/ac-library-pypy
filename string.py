@@ -57,36 +57,36 @@ def sa_naive(s):
     return sa
 
 
-# def sa_doubling(s):
-#     n = len(s)
-#     rnk = s.copy()
-#     tmp = [0] * n
-#     sa = list(range(n))
-#     k = 1
-#     while k < n:
+def sa_doubling(s):
+    n = len(s)
+    rnk = s.copy()
+    tmp = [0] * n
+    sa = list(range(n))
+    k = 1
+    while k < n:
 
-#         def cmp(x, y):
-#             if rnk[x] != rnk[y]:
-#                 return rnk[x] < rnk[y]
-#             rx = rnk[x + k] if x + k < n else -1
-#             ry = rnk[y + k] if y + k < n else -1
-#             return rx < ry
+        def cmp(x, y):
+            if rnk[x] != rnk[y]:
+                return rnk[x] < rnk[y]
+            rx = rnk[x + k] if x + k < n else -1
+            ry = rnk[y + k] if y + k < n else -1
+            return rx < ry
 
-#         merge_sort(sa, cmp)
-#         tmp[sa[0]] = 0
-#         for i in range(n):
-#             tmp[sa[i]] = tmp[sa[i - 1]] + (1 if cmp(sa[i - 1], sa[i]) else 0)
-#         tmp, rnk = rnk, tmp
-#         k *= 2
-#     return sa
+        merge_sort(sa, cmp)
+        tmp[sa[0]] = 0
+        for i in range(n):
+            tmp[sa[i]] = tmp[sa[i - 1]] + (1 if cmp(sa[i - 1], sa[i]) else 0)
+        tmp, rnk = rnk, tmp
+        k *= 2
+    return sa
 
 
 # SA-IS, linear-time suffix array construction
 # Reference:
 # G. Nong, S. Zhang, and W. H. Chan,
 # Two Efficient Algorithms for Linear Time Suffix Array Construction
-THRESHOLD_NAIVE = 33
-# THRESHOLD_DOUBLING = 33
+THRESHOLD_NAIVE = 10
+THRESHOLD_DOUBLING = 40
 def sa_is(s, upper):
     n = len(s)
     if n == 0:
@@ -100,8 +100,8 @@ def sa_is(s, upper):
             return [1, 0]
     if n < THRESHOLD_NAIVE:
         return sa_naive(s)
-    # if n < THRESHOLD_DOUBLING:
-    #     return sa_doubling(s)
+    if n < THRESHOLD_DOUBLING:
+        return sa_doubling(s)
     sa = [0] * n
     ls = [False] * n
     for i in range(n-2, -1, -1):
