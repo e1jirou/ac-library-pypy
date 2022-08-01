@@ -10,7 +10,7 @@ class DisjointSetUnion:
         self.parent_or_size = [-1] * n
 
     def leader(self, a):
-        # leader is not a recursive function.
+        # leader is not recursive.
         assert 0 <= a < self.n
         path = []
         while 0 <= self.parent_or_size[a]:

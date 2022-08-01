@@ -68,7 +68,7 @@ class MaxFlow:
                 que.append(e.to)
 
     def dfs(self, s, t, up):
-        # dfs is not a recursive function.
+        # dfs is not recursive.
         todo = [t]
         while todo:
             v = todo[-1]
