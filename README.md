@@ -1,8 +1,6 @@
 # PyPy AtCoder Library
 PyPy ユーザ向けに作成した競技プログラミング用のライブラリです.
 
-[AtCoder Library](https://github.com/atcoder/ac-library) に含まれないライブラリもあります.
-
 ## convolution
 mod を設定して畳み込みを計算します.
 
