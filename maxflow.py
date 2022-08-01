@@ -1,6 +1,6 @@
 from collections import deque
 
-class Dinic:
+class MaxFlow:
     """
     Reference
     https://github.com/atcoder/ac-library/blob/master/atcoder/maxflow.hpp
