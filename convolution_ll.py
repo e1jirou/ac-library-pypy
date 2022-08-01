@@ -4,7 +4,7 @@
 """
 Reference
 https://ikatakos.com/pot/programming_algorithm/fft
-https://maspypy.com/%E6%95%B0%E5%AD%A6%E3%83%BBnumpy-%E9%AB%98%E9%80%9F%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9Bfft%E3%81%AB%E3%82%88%E3%82%8B%E7%95%B3%E3%81%BF%E8%BE%BC%E3%81%BF
+https://maspypy.com/数学・numpy-高速フーリエ変換fftによる畳み込み
 """
 
 import numpy as np
