@@ -3,6 +3,12 @@ PyPy ユーザ向けに作成した競技プログラミング用のライブラ
 
 [AtCoder Library](https://github.com/atcoder/ac-library) に含まれないライブラリもあります.
 
+## convolution
+mod を設定して畳み込みを計算します.
+
+## convolution_ll
+mod を設定せずに畳み込みを計算します. PyPy では動作しません.
+
 ## division
 整数演算に関するアルゴリズムの詰め合わせです.
 
