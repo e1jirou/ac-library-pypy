@@ -82,7 +82,7 @@ class PivotTree:
             nd.value = self.rightmost(nd.left).value
             self.remove(nd.value-1, nd.left, nd)
     
-    def at(self, k): # 0-indexed で小さいほうからk番目の値を取得する.
+    def nth(self, k): # 0-indexed で小さいほうからk番目の値を取得する.
         assert k < self.root.size - 1
         nd = self.root
 
