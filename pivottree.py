@@ -104,7 +104,7 @@ class PivotTree:
     def find_by_order(self, k):
         """
         It returns k-th value in ascending order with 0-indexed.
-        It returns -1 if the size is smaller than k.
+        It returns -1 if the tree size is k or less.
         """
         if self.size() <= k:
             return -1
@@ -117,8 +117,7 @@ class PivotTree:
             if k < left_size:
                 nd = nd.left
             elif k == left_size:
-                break
+                return nd.value - 1
             else:
                 k -= left_size + 1
                 nd = nd.right
-        return nd.value - 1
