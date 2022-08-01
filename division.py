@@ -1,52 +1,53 @@
 # divisors(12) == [1,2,3,4,6,12]
 # O(sqrt(n))
 def divisors(n):
-    assert 1 <= n
-    lis = []
-    for i in range(1, n+1):
-        if i * i >= n:
-            if i * i == n:
-                lis.append(i)
-            break
-        if n % i == 0:
-            lis.append(i)
-            lis.append(n // i)
-    lis.sort()
-    return lis
+    assert 0 < n
+    res = []
+    d = 1
+    while d * d < n:
+        if n % d == 0:
+            res.append(d)
+            res.append(n // d)
+        d += 1
+    if d * d == n:
+        res.append(d)
+    res.sort()
+    return res
 
 
 # prime_factorization(60) == {2:2, 3:1, 5:1}
 # O(sqrt(n))
 def prime_factorization(n):
-    assert 1 <= n
-    dic = dict()
-    for p in range(2, n+1):
-        if p * p > n:
-            break
+    assert 0 < n
+    res = dict()
+    p = 2
+    while p * p <= n:
         if n % p == 0:
             cnt = 0
             while n % p == 0:
                 cnt += 1
                 n //= p
-            dic[p] = cnt
-    if n > 1:
-        dic[n] = 1
-    return dic
+            res[p] = cnt
+        p += 1
+    if 1 < n:
+        res[n] = 1
+    return res
 
 
 # prime_numbers(n) == [p | (p ∈ prime numbers) and p < n]
-# prime_numbers(10) == [2,3,5,7]
+# prime_numbers(11) == [2,3,5,7]
 def prime_numbers(n):
-    assert 3 <= n
-    lis = [2]
+    if n <= 2:
+        return []
+    res = [2]
     for i in range(3, n, 2):
-        for p in lis:
-            if p * p > i:
-                lis.append(i)
-                break
+        for p in res:
             if i % p == 0:
                 break
-    return lis
+            if i < p * p:
+                res.append(i)
+                break
+    return res
 
 
 class Eratosthenes:
@@ -58,16 +59,16 @@ class Eratosthenes:
             self.sieve[i] = 2
         for i in range(3, n, 2):
             for p in self.prime:
+                if i % p == 0:
+                    self.sieve[i] = p
+                    break
                 if i < p * p:
                     self.sieve[i] = i
                     self.prime.append(i)
                     break
-                if i % p == 0:
-                    self.sieve[i] = p
-                    break
 
     def prime_factorization(self, n):
-        assert n < self.n
+        assert 0 < n < self.n
         res = dict()
         while 1 < n:
             if self.sieve[n] not in res:
@@ -79,15 +80,15 @@ class Eratosthenes:
 
 
 # a*x + b*y == gcd(a,b)
-# return gcd(a,b), x, y
+# ext_Euclid(a, b) == gcd(a,b), x, y
 def ext_Euclid(a, b):
-    if b > 0:
-        gcd_ab, x, y = ext_Euclid(b,a%b)
+    if 0 < b:
+        gcd_ab, x, y = ext_Euclid(b, a%b)
         return gcd_ab, y, x - (a//b)*y
     return a, 1, 0
 
 
-# return sum([(a*i + b)//m for i in range(n)])
+# floor_sum(n, m, a, b) == sum([(a*i + b)//m for i in range(n)])
 def floor_sum(n, m, a, b):
     assert 0 <= n
     assert 1 <= m
