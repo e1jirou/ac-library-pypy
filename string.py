@@ -10,6 +10,8 @@ def merge_sort(data, lt=lambda x,y: x < y):
     # stable sort
     n = len(data)
     res = data.copy()
+    if (n - 1).bit_length() & 1:
+        data, res = res, data
     width = 1
     while width < n:
         tmp = 0
@@ -35,7 +37,6 @@ def merge_sort(data, lt=lambda x,y: x < y):
                 tmp += 1
         data, res = res, data
         width *= 2
-    return data
 
 
 def sa_naive(s):
@@ -51,39 +52,41 @@ def sa_naive(s):
             r += 1
         return l == n
 
-    return merge_sort(list(range(n)), cmp)
-
-
-def sa_doubling(s):
-    n = len(s)
-    rnk = s.copy()
-    tmp = [0] * n
     sa = list(range(n))
-    k = 1
-    while k < n:
-
-        def cmp(x, y):
-            if rnk[x] != rnk[y]:
-                return rnk[x] < rnk[y]
-            rx = rnk[x + k] if x + k < n else -1
-            ry = rnk[y + k] if y + k < n else -1
-            return rx < ry
-
-        sa = merge_sort(sa, cmp)
-        tmp[sa[0]] = 0
-        for i in range(n):
-            tmp[sa[i]] = tmp[sa[i - 1]] + (1 if cmp(sa[i - 1], sa[i]) else 0)
-        tmp, rnk = rnk, tmp
-        k *= 2
+    merge_sort(sa, cmp)
     return sa
+
+
+# def sa_doubling(s):
+#     n = len(s)
+#     rnk = s.copy()
+#     tmp = [0] * n
+#     sa = list(range(n))
+#     k = 1
+#     while k < n:
+
+#         def cmp(x, y):
+#             if rnk[x] != rnk[y]:
+#                 return rnk[x] < rnk[y]
+#             rx = rnk[x + k] if x + k < n else -1
+#             ry = rnk[y + k] if y + k < n else -1
+#             return rx < ry
+
+#         merge_sort(sa, cmp)
+#         tmp[sa[0]] = 0
+#         for i in range(n):
+#             tmp[sa[i]] = tmp[sa[i - 1]] + (1 if cmp(sa[i - 1], sa[i]) else 0)
+#         tmp, rnk = rnk, tmp
+#         k *= 2
+#     return sa
 
 
 # SA-IS, linear-time suffix array construction
 # Reference:
 # G. Nong, S. Zhang, and W. H. Chan,
 # Two Efficient Algorithms for Linear Time Suffix Array Construction
-THRESHOLD_NAIVE = 10
-THRESHOLD_DOUBLING = 40
+THRESHOLD_NAIVE = 33
+# THRESHOLD_DOUBLING = 33
 def sa_is(s, upper):
     n = len(s)
     if n == 0:
@@ -97,8 +100,8 @@ def sa_is(s, upper):
             return [1, 0]
     if n < THRESHOLD_NAIVE:
         return sa_naive(s)
-    if n < THRESHOLD_DOUBLING:
-        return sa_doubling(s)
+    # if n < THRESHOLD_DOUBLING:
+    #     return sa_doubling(s)
     sa = [0] * n
     ls = [False] * n
     for i in range(n-2, -1, -1):
