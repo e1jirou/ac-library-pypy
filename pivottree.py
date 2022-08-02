@@ -323,6 +323,12 @@ class PivotTree:
             nd = nd.parent
         return nd
 
+    def is_end(self, nd):
+        """
+        It returns True if nd is the last node, False otherwise.
+        """
+        return nd is self.root
+
     def index(self, v):
         """
         It returns the number of nodes whose value is less than v.
@@ -339,9 +345,3 @@ class PivotTree:
             else:
                 nd = nd.left
         return cnt
-
-    def is_end(self, nd):
-        """
-        It returns True if nd is the last node, False otherwise.
-        """
-        return nd is self.root
