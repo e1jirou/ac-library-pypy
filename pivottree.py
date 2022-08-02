@@ -123,13 +123,13 @@ class PivotTree:
                     return prev
 
     def leftmost(self, nd):
-        if nd.left:
-            return self.leftmost(nd.left)
+        while nd.left:
+            nd = nd.left
         return nd
 
     def rightmost(self, nd):
-        if nd.right:
-            return self.rightmost(nd.right)
+        while nd.right:
+            nd = nd.right
         return nd
 
     @property
