@@ -184,13 +184,13 @@ class PivotTree:
                 if nd.left:
                     nd = nd.left
                 else:
-                    # The tree does not contain v.
+                    # The container does not contain v.
                     return 0
             else:
                 if nd.right:
                     nd = nd.right
                 else:
-                    # The tree does not contain v.
+                    # The container does not contain v.
                     return 0
         if c < nd.count:
             nd.count -= c
