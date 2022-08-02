@@ -6,7 +6,7 @@ class PivotTree:
     You can store multiple equal integers.
     """
     def __init__(self, max_value=1<<60):
-        self.n = max_value.bit_length()
+        self.n = (max_value + 1).bit_length()
         self.root = self.node(1<<self.n, 1<<self.n, None, 0)
 
     class node:
