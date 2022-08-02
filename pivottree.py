@@ -5,9 +5,9 @@ class PivotTree:
 
     You can store multiple equal integers.
     """
-    def __init__(self, n=60):
-        self.n = n
-        self.root = self.node(1<<n, 1<<n, None, 0)
+    def __init__(self, max_value=1<<60):
+        self.n = max_value.bit_length()
+        self.root = self.node(1<<self.n, 1<<self.n, None, 0)
 
     class node:
         def __init__(self, v, p, parent, c):
@@ -19,12 +19,15 @@ class PivotTree:
             self.size = c
             self.count = c
 
+        def get(self):
+            return self.value - 1
+
     def update(self, nd):
         while nd:
             nd.size = nd.count
-            if self.left:
+            if nd.left:
                 nd.size += nd.left.size
-            if self.right:
+            if nd.right:
                 nd.size += nd.right.size
             nd = nd.parent
 
@@ -33,7 +36,7 @@ class PivotTree:
         It adds an element v.
         It returns None.
         """
-        assert 0 < v + 1 < self.root.value
+        assert 0 <= v < 1<<self.n
         assert 0 < c
         v += 1
         nd = self.root
@@ -83,37 +86,41 @@ class PivotTree:
         """
         v += 1
         nd = self.root
+        prev = None
         while True:
             if v <= nd.value:
                 if nd.left:
                     nd = nd.left
                 else:
-                    return nd.parent
+                    return prev
             else:
+                prev = nd
                 if nd.right:
                     nd = nd.right
                 else:
-                    return nd
+                    return prev
 
     def find_r(self, v):
         """
         It returns the node with the lowest value among nodes whose value is greater than v.
         When there is no such node, it returns the root.
         """
-        assert v + 1 < self.root.value
+        assert v < 1<<self.n
         v += 1
         nd = self.root
+        prev = None
         while True:
             if v < nd.value:
+                prev = nd
                 if nd.left:
                     nd = nd.left
                 else:
-                    return nd
+                    return prev
             else:
                 if nd.right:
                     nd = nd.right
                 else:
-                    return nd.parent
+                    return prev
 
     def leftmost(self, nd):
         if nd.left:
@@ -153,7 +160,7 @@ class PivotTree:
         if self.empty():
             return -1
         else:
-            return self.max_element.value - 1
+            return self.max_element.get()
 
     @property
     def min(self):
@@ -161,14 +168,14 @@ class PivotTree:
         It returns the maximum value.
         When the container is empty, it returns ((1<<self.n) - 1).
         """
-        return self.min_element.value - 1
+        return self.min_element.get()
 
     def erase(self, v, c=float("inf"), nd=None):
         """
         It removes an element v.
         It returns the number of removed elements.
         """
-        assert 0 < v + 1 < self.root.value
+        assert 0 <= v < 1<<self.n
         v += 1
         if not nd:
             nd = self.root
@@ -226,7 +233,7 @@ class PivotTree:
 
     def find_by_order(self, k):
         """
-        It returns the k-th smallest value.
+        It returns the node which has the k-th smallest element.
         When the tree size is k or less, it returns -1.
         """
         if self.size() <= k:
@@ -240,7 +247,7 @@ class PivotTree:
             if k < left_size:
                 nd = nd.left
             elif k < left_size + nd.count:
-                return nd.value - 1
+                return nd
             else:
                 k -= left_size + nd.count
                 nd = nd.right
@@ -256,9 +263,9 @@ class PivotTree:
         It returns the node with a value of v.
         When the container does not contain v, it returns the root.
         """
-        assert 0 < v + 1 < self.root.value
+        assert 0 <= v < 1<<self.n
         v += 1
-        nd = self.find_r(v - 1)
+        nd = self.find_r(v - 2)
         if nd.value == v:
             return nd
         else:
@@ -268,17 +275,17 @@ class PivotTree:
         """
         It returns True if the container contains v, False otherwise.
         """
-        assert 0 < v + 1 < self.root.value
+        assert 0 <= v < 1<<self.n
         v += 1
-        return self.find(v).value == v
+        return self.find(v - 1).value == v
 
     def count(self, v):
         """
         It returns the number of v.
         """
-        assert 0 < v + 1 < self.root.value
+        assert 0 <= v < 1<<self.n
         v += 1
-        nd = self.find(v)
+        nd = self.find(v - 1)
         if nd.value == v:
             return nd.count
         else:
@@ -286,13 +293,13 @@ class PivotTree:
 
     def begin(self):
         """
-        It returns the head node.
+        It returns the first node.
         """
         return self.min_element
 
     def end(self):
         """
-        It returns the tail node.
+        It returns the last node.
         """
         return self.root
 
@@ -332,3 +339,9 @@ class PivotTree:
             else:
                 nd = nd.left
         return cnt
+
+    def is_end(self, nd):
+        """
+        It returns True if nd is the last node, False otherwise.
+        """
+        return nd is self.root
