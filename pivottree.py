@@ -18,14 +18,13 @@ class PivotTree:
     def insert(self, v):
         """
         It adds an element v.
-        It returns -1 if the tree already contains v, 0 otherwise.
+        You cannot insert(v) when the tree already contains v.
         """
         assert 0 < v + 1 < self.root.value
         v += 1
         nd = self.root
         while True:
-            if v == nd.value:
-                return -1
+            assert v != nd.value
             nd.size += 1
             mi = min(v, nd.value)
             ma = max(v, nd.value)
