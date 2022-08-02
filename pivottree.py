@@ -234,10 +234,10 @@ class PivotTree:
     def find_by_order(self, k):
         """
         It returns the node which has the k-th smallest element.
-        When the tree size is k or less, it returns -1.
+        When k is greater than or equal to the container, it returns the root.
         """
         if self.size() <= k:
-            return -1
+            return self.root
         nd = self.root
         while True:
             if nd.left:
