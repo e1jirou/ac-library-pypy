@@ -1,9 +1,9 @@
 class PivotTree:
     """
+    You can store multiple equal integers.
+
     Reference
     https://qiita.com/Kiri8128/items/6256f8559f0026485d90
-
-    You can store multiple equal integers.
     """
     def __init__(self, max_value=1<<60):
         self.n = (max_value + 1).bit_length()
