@@ -1,6 +1,8 @@
 # PyPy AtCoder Library
 PyPy ユーザ向けに作成した競技プログラミング用のライブラリです.
 
+各ファイルは独立しているため, コピー&ペイストで簡単に使用することができます.
+
 ## convolution
 mod を設定して畳み込みを計算します.
 
@@ -35,7 +37,7 @@ Lowest Common Ancestor を求めます.
 最小費用流を求めます.
 
 ## pivottree
-Pivot Tree と呼ばれるデータ構造です.
+Pivot Tree と呼ばれるデータ構造です. pivottree.md に簡単な説明を記載しました.
 
 ## popcount
 1が立っているビットを数えます.
