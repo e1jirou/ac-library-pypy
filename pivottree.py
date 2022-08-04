@@ -10,27 +10,22 @@ class PivotTree:
         self.log = self.n.bit_length()
         self.root = self.node(1<<self.log, 1<<self.log, None, 0)
 
-    class node:
-        def __init__(self, v, p, parent, c):
-            self.value = v
-            self.pivot = p
-            self.left = None
-            self.right = None
-            self.parent = parent
-            self.size = c
-            self.count = c
+    def __len__(self):
+        return self.root.size
 
-        def get(self):
-            return self.value - 1
+    def __contains__(self, v):
+        assert 0 <= v < self.n
+        v += 1
+        return self.find(v - 1).value == v
 
-    def update(self, nd):
-        while nd:
-            nd.size = nd.count
-            if nd.left:
-                nd.size += nd.left.size
-            if nd.right:
-                nd.size += nd.right.size
-            nd = nd.parent
+    def __iter__(self):
+        nd = self.begin()
+        while nd is not self.root:
+            yield nd
+            nd = nd.next()
+
+    def __getitem__(self, v):
+        return self.find_by_order(v).get()
 
     def insert(self, v, c=1):
         """
@@ -46,39 +41,24 @@ class PivotTree:
                 # The tree already contains v.
                 nd.count += c
                 break
-            if v < nd.value:
-                mi_v = v
-                ma_v = nd.value
-                mi_c = c
-                ma_c = nd.count
-            else:
-                mi_v = nd.value
-                ma_v = v
-                mi_c = nd.count
-                ma_c = c
-            if mi_v < nd.pivot:
-                nd.value = ma_v
-                nd.count = ma_c
+            if nd.value < v <= nd.pivot or nd.pivot <= v < nd.value:
+                v, nd.value = nd.value, v
+                c, nd.count = nd.count, c
+            if v < nd.pivot:
                 if nd.left:
                     nd = nd.left
-                    v = mi_v
-                    c = mi_c
                 else:
                     p = nd.pivot
-                    nd.left = self.node(mi_v, p - (p&-p)//2, nd, mi_c)
+                    nd.left = self.node(v, p - (p&-p)//2, nd, c)
                     break
             else:
-                nd.value = mi_v
-                nd.count = mi_c
                 if nd.right:
                     nd = nd.right
-                    v = ma_v
-                    c = ma_c
                 else:
                     p = nd.pivot
-                    nd.right = self.node(ma_v, p + (p&-p)//2, nd, ma_c)
+                    nd.right = self.node(v, p + (p&-p)//2, nd, c)
                     break
-        self.update(nd)
+        nd.update()
 
     def lt_max(self, v):
         """
@@ -137,53 +117,39 @@ class PivotTree:
         """
         return self.gt_min(v - 1)
 
-    def leftmost(self, nd):
-        while nd.left:
-            nd = nd.left
-        return nd
-
-    def rightmost(self, nd):
-        while nd.right:
-            nd = nd.right
-        return nd
-
-    @property
     def max_element(self):
         """
         It returns the node with the highest value.
         When the container is empty, it returns the root.
         """
-        if self.empty():
-            return self.root
+        if self.root.left:
+            return self.root.left.rightmost()
         else:
-            return self.rightmost(self.root.left)
+            return self.root
 
-    @property
     def min_element(self):
         """
         It returns the node with the lowest value.
         When the container is empty, it returns the root.
         """
-        return self.leftmost(self.root)
+        return self.root.leftmost()
 
-    @property
     def max(self):
         """
         It returns the maximum value.
         When the container is empty, it returns -1.
         """
-        if self.empty():
+        if self.root.size == 0:
             return -1
         else:
-            return self.max_element.get()
+            return self.max_element().get()
 
-    @property
     def min(self):
         """
         It returns the maximum value.
         When the container is empty, it returns ((1<<self.n) - 1).
         """
-        return self.min_element.get()
+        return self.min_element().get()
 
     def erase(self, v, c=float("inf"), nd=None):
         """
@@ -209,7 +175,7 @@ class PivotTree:
                     return 0
         if c < nd.count:
             nd.count -= c
-            self.update(nd)
+            nd.update()
             return c
         res = nd.count
         if not nd.left and not nd.right:
@@ -221,14 +187,14 @@ class PivotTree:
                 nd.parent.left = None
             else:
                 nd.parent.right = None
-            self.update(nd.parent)
+            nd.parent.update()
         elif nd.right:
-            move_nd = self.leftmost(nd.right)
+            move_nd = nd.right.leftmost()
             nd.value = move_nd.value
             nd.count = move_nd.count
             self.erase(nd.value - 1, float("inf"), nd.right)
         else:
-            move_nd = self.rightmost(nd.left)
+            move_nd = nd.left.rightmost()
             nd.value = move_nd.value
             nd.count = move_nd.count
             self.erase(nd.value - 1, float("inf"), nd.left)
@@ -244,14 +210,14 @@ class PivotTree:
         """
         It returns True if the container is empty, False otherwise.
         """
-        return self.size() == 0
+        return self.root.size == 0
 
     def find_by_order(self, k):
         """
         It returns the node which has the k-th smallest element.
         When k is greater than or equal to the container, it returns the root.
         """
-        if self.size() <= k:
+        if self.root.size <= k:
             return self.root
         nd = self.root
         while True:
@@ -271,7 +237,7 @@ class PivotTree:
         """
         It removes all elements.
         """
-        self.root = self.node(1<<self.n, 1<<self.n, None, 0)
+        self.root = self.node(1<<self.log, 1<<self.log, None, 0)
 
     def find(self, v):
         """
@@ -285,14 +251,6 @@ class PivotTree:
             return nd
         else:
             return self.root
-
-    def contains(self, v):
-        """
-        It returns True if the container contains v, False otherwise.
-        """
-        assert 0 <= v < self.n
-        v += 1
-        return self.find(v - 1).value == v
 
     def count(self, v):
         """
@@ -310,39 +268,13 @@ class PivotTree:
         """
         It returns the first node.
         """
-        return self.min_element
+        return self.min_element()
 
     def end(self):
         """
         It returns the last node.
         """
         return self.root
-
-    def next(self, nd):
-        """
-        It returns the next node.
-        """
-        if nd.right:
-            return self.leftmost(nd.right)
-        while nd.parent:
-            if nd.value < nd.parent.value:
-                return nd.parent
-            nd = nd.parent
-        # nd is end()
-        return nd
-
-    def prev(self, nd):
-        """
-        It returns the previous node.
-        """
-        if nd.left:
-            return self.rightmost(nd.left)
-        while nd.parent:
-            if nd.parent.value < nd.value:
-                return nd.parent
-            nd = nd.parent
-        # nd is begin() - 1
-        return nd
 
     def is_end(self, nd):
         """
@@ -366,3 +298,86 @@ class PivotTree:
             else:
                 nd = nd.left
         return cnt
+
+    class node:
+        def __init__(self, v, p, parent, c):
+            self.value = v
+            self.pivot = p
+            self.left = None
+            self.right = None
+            self.parent = parent
+            self.size = c
+            self.count = c
+
+        def get(self):
+            """
+            It returns the real value.
+            """
+            return self.value - 1
+
+        def update(self):
+            """
+            It updates the size of all ancestors.
+            """
+            nd = self
+            while nd:
+                nd.size = nd.count
+                if nd.left:
+                    nd.size += nd.left.size
+                if nd.right:
+                    nd.size += nd.right.size
+                nd = nd.parent
+
+        def leftmost(self):
+            """
+            It returns the descendant with the smallest value.
+            """
+            nd = self
+            while nd.left:
+                nd = nd.left
+            return nd
+
+        def rightmost(self):
+            """
+            It returns the descendant with the highest value.
+            """
+            nd = self
+            while nd.right:
+                nd = nd.right
+            return nd
+
+        def next(self):
+            """
+            It returns the next node.
+            """
+            nd = self
+            if nd.right:
+                return nd.right.leftmost()
+            while nd.parent:
+                if nd.value < nd.parent.value:
+                    return nd.parent
+                nd = nd.parent
+            # nd is end()
+            return nd
+
+        def prev(self):
+            """
+            It returns the previous node.
+            """
+            nd = self
+            if nd.left:
+                return nd.left.rightmost()
+            while nd.parent:
+                if nd.parent.value < nd.value:
+                    return nd.parent
+                nd = nd.parent
+            # nd is begin() - 1
+            return nd
+
+        def add(self, c):
+            """
+            It changes the count.
+            """
+            assert 0 < self.count + c
+            self.count += c
+            self.update()
