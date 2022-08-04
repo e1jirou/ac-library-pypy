@@ -5,9 +5,9 @@ class PivotTree:
     Reference
     https://qiita.com/Kiri8128/items/6256f8559f0026485d90
     """
-    def __init__(self, n=(1<<60)-2):
-        self.n = n
-        self.log = (n + 1).bit_length()
+    def __init__(self, max_value=(1<<60)-2):
+        self.n = max_value + 1
+        self.log = self.n.bit_length()
         self.root = self.node(1<<self.log, 1<<self.log, None, 0)
 
     class node:
@@ -37,7 +37,7 @@ class PivotTree:
         It adds an element v.
         It returns None.
         """
-        assert 0 <= v <= self.n
+        assert 0 <= v < self.n
         assert 0 < c
         v += 1
         nd = self.root
@@ -106,7 +106,7 @@ class PivotTree:
         It returns the node with the lowest value among nodes whose value is greater than v.
         When there is no such node, it returns the root.
         """
-        assert v <= self.n
+        assert v < self.n
         v += 1
         nd = self.root
         prev = None
@@ -176,7 +176,7 @@ class PivotTree:
         It removes an element v.
         It returns the number of removed elements.
         """
-        assert 0 <= v <= self.n
+        assert 0 <= v < self.n
         v += 1
         if not nd:
             nd = self.root
@@ -264,7 +264,7 @@ class PivotTree:
         It returns the node with a value of v.
         When the container does not contain v, it returns the root.
         """
-        assert 0 <= v <= self.n
+        assert 0 <= v < self.n
         v += 1
         nd = self.find_r(v - 2)
         if nd.value == v:
@@ -276,7 +276,7 @@ class PivotTree:
         """
         It returns True if the container contains v, False otherwise.
         """
-        assert 0 <= v <= self.n
+        assert 0 <= v < self.n
         v += 1
         return self.find(v - 1).value == v
 
@@ -284,7 +284,7 @@ class PivotTree:
         """
         It returns the number of v.
         """
-        assert 0 <= v <= self.n
+        assert 0 <= v < self.n
         v += 1
         nd = self.find(v - 1)
         if nd.value == v:
