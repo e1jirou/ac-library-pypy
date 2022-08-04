@@ -80,7 +80,7 @@ class PivotTree:
                     break
         self.update(nd)
 
-    def find_l(self, v):
+    def lt_max(self, v):
         """
         It returns the node with the highest value among nodes whose value is less than v.
         When there is no such node, it returns None.
@@ -101,7 +101,14 @@ class PivotTree:
                 else:
                     return prev
 
-    def find_r(self, v):
+    def leq_max(self, v):
+        """
+        It returns the node with the highest value among nodes whose value is less than or equal to v.
+        When there is no such node, it returns None.
+        """
+        return self.lt_max(v + 1)
+
+    def gt_min(self, v):
         """
         It returns the node with the lowest value among nodes whose value is greater than v.
         When there is no such node, it returns the root.
@@ -122,6 +129,13 @@ class PivotTree:
                     nd = nd.right
                 else:
                     return prev
+
+    def geq_min(self, v):
+        """
+        It returns the node with the lowest value among nodes whose value is greater than or equal to v.
+        When there is no such node, it returns the root.
+        """
+        return self.gt_min(v - 1)
 
     def leftmost(self, nd):
         while nd.left:
@@ -266,7 +280,7 @@ class PivotTree:
         """
         assert 0 <= v < self.n
         v += 1
-        nd = self.find_r(v - 2)
+        nd = self.gt_min(v - 2)
         if nd.value == v:
             return nd
         else:
