@@ -1,8 +1,17 @@
 # Pivot Tree
-TODO: Pivot Tree の説明
+Pivot Tree というデータ構造を Python で実装しました.
 
-## PivotTree
-TODO: メソッドの説明
+非負整数の集合を効率よく管理することができます.
+
+実装については [平衡二分木を実装する - Qiita](https://qiita.com/Kiri8128/items/6256f8559f0026485d90) を参考にしました.
+
+## コンストラクタ
+```Python3
+PivotTree(max_value = (1 << 60) - 2)
+```
+0 以上 max_value 以下の値を扱えるようになります.
+
+TODO: 各メソッドの説明
 
 ## 使用例
 https://github.com/tatyam-prime/SortedSet/tree/main/example
