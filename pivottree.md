@@ -14,12 +14,12 @@ pt = PivotTree(max_value = (1 << 60) - 2)
 デフォルトでは $1.152921504606846974 \times 10^{18}$ 以下の非負整数を扱えます.
 
 ### 制約
-- $0 \leq max\_value$
+- $0 \leq max\_ value$
 
 ### 計算量
 - $O(1)$
 
-$n = max\_value + 1$ とします.
+$n = max\_ value + 1$ とします.
 
 ## len(pt) / pt.size()
 格納されている要素数を返します.
