@@ -6,6 +6,7 @@ class PivotTree:
     https://qiita.com/Kiri8128/items/6256f8559f0026485d90
     """
     def __init__(self, max_value=(1<<60)-2):
+        assert 0 <= max_value
         self.n = max_value + 1
         self.log = self.n.bit_length()
         self.root = self.node(1<<self.log, 1<<self.log, None, 0)
