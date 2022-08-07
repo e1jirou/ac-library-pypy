@@ -27,3 +27,18 @@ class FenwickTree:
     def sum(self, left, right):
         assert 0 <= left <= right <= self.n
         return self.sum_left(right) - self.sum_left(left)
+
+    def lower_bound(self, x):
+        """
+        It returns max(i for i in range(n) if sum(0,i) < x).
+        You can use it when all elements of the array is non-negative.
+        """
+        s = 0
+        p = 0
+        for i in reversed(range(self.n.bit_length())):
+            if p | 1<<i <= self.n:
+                d = self.data[p | 1<<i]
+                if s + d < x:
+                    s += d
+                    p |= 1 << i
+        return p
