@@ -5,9 +5,9 @@ class PivotTree:
     Reference
     https://qiita.com/Kiri8128/items/6256f8559f0026485d90
     """
-    def __init__(self, max_value=(1<<60)-2):
-        assert 0 <= max_value
-        self.n = max_value + 1
+    def __init__(self, n=(1<<60)-2):
+        assert 0 <= n
+        self.n = n + 1
         self.log = self.n.bit_length()
         self.root = self.node(1<<self.log, 1<<self.log, None, 0)
 
@@ -218,7 +218,9 @@ class PivotTree:
         It returns the node which has the k-th smallest element.
         When k is greater than or equal to the container, it returns the root.
         """
-        if self.root.size <= k:
+        if k < 0:
+            k = self.root.size + k
+        if not 0 <= k < self.root.size:
             return self.root
         nd = self.root
         while True:
