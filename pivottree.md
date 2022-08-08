@@ -35,7 +35,7 @@ pt = PivotTree(n = (1 << 60) - 2)
 ### 計算量
 - $O(\log n)$
 
-## lt_max(v), leq_max(v), gt_min(v), geq_min(v)
+## lt_max(v) / leq_max(v) / gt_min(v) / geq_min(v)
 それぞれ値が v より小さいものの中で最大, v 以下のものの中で最大, v より大きいものの中で最小, v 以上のものの中で最小となるノードを返します.
 
 該当するノードが無かったとき, lt_max 及び leq_max は None を返し, gt_min 及び geq_min は木の根を返します.
@@ -47,13 +47,13 @@ pt = PivotTree(n = (1 << 60) - 2)
 ### 計算量
 - $O(\log n)$
 
-## max_element(), min_element()
+## max_element() / min_element()
 それぞれ値が最大, 最小のノードを返します.
 
 ### 計算量
 - $O(\log n)$
 
-## max(), min()
+## max() / min()
 それぞれ最大値, 最小値を返します.
 
 ### 計算量
@@ -76,7 +76,7 @@ pt = PivotTree(n = (1 << 60) - 2)
 ### 計算量
 - $O(1)$
 
-## pt[k], pt.find_by_order(k)
+## pt[k] / pt.find_by_order(k)
 それぞれ小さいほうから 0-indexed で k 番目の値, その値を含むノードを返します.
 
 k 番目の値が存在しないときは, それぞれ木の根の値, 木の根を返します.
@@ -99,13 +99,13 @@ v より小さいものの個数を返します.
 ### 計算量
 - $O(\log n)$
 
-## node.get(), node.count
+## node.get() / node.count
 node は node.get() が node.count 個格納されていることを表します.
 
 ### 計算量
 - $O(1)$
 
-## node.prev(), node.next()
+## node.prev() / node.next()
 それぞれ次に値が小さいノード, 次に値が大きいノードを返します.
 
 ### 計算量
