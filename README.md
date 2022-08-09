@@ -27,6 +27,9 @@ Lazy Segment Tree と呼ばれるデータ構造です.
 ## lca
 Lowest Common Ancestor を求めます.
 
+## matching
+最大二部マッチングを求めます.
+
 ## matrix
 行列累乗を計算します.
 
