@@ -25,8 +25,8 @@ class Rerooting:
 
     def bottom_up(self):
         dp = [None] * self.n
-        lr =[[self.id] * (len(self.children[u]) + 1) for u in range(self.n)]
-        rl = [[self.id] * (len(self.children[u]) + 1) for u in range(self.n)]
+        lr = [[self.id] * (len(self.children[u])+1) for u in range(self.n)]
+        rl = [[self.id] * (len(self.children[u])+1) for u in range(self.n)]
         for u in reversed(self.order):
             for i in range(len(self.children[u])):
                 v = self.children[u][i]
