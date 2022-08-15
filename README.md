@@ -48,6 +48,9 @@ Pivot Tree と呼ばれるデータ構造です. pivottree.md に簡単な説明
 ## remheap
 任意の要素を削除できる優先度付きキューです.
 
+## rerooting
+全方位木 DP を行います.
+
 ## scc_twosat
 強連結成分分解を行うものと 2-SAT を解くものが含まれています.
 
