@@ -10,12 +10,6 @@ https://github.com/atcoder/ac-library/blob/master/document_ja/convolution.md
 def primitive_root(m):
     if m == 2:
         return 1
-    if m == 167772161:
-        return 3
-    if m == 469762049:
-        return 3
-    if m == 754974721:
-        return 11
     if m == 998244353:
         return 3
     divs = [0] * 20
