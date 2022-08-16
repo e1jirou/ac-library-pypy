@@ -1,4 +1,6 @@
 mod = 998244353
+#mod = 2130706433
+#mod = 9223372006790004737
 """
 Reference
 https://github.com/atcoder/ac-library/blob/master/atcoder/convolution.hpp
