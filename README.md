@@ -39,14 +39,14 @@ Lowest Common Ancestor を求めます.
 ## mincostflow
 最小費用流を求めます.
 
+## minmax
+最小値, 最大値に関するデータ構造の詰め合わせです.
+
 ## pivottree
 Pivot Tree と呼ばれるデータ構造です. pivottree.md に簡単な説明を記載しました.
 
 ## popcount
 1が立っているビットを数えます.
-
-## remheap
-任意の要素を削除できる優先度付きキューです.
 
 ## rerooting
 全方位木 DP を行います.
