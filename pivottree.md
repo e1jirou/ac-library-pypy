@@ -140,6 +140,9 @@ max, min, erase などを使用して解くことができます.
 ### ARC033-C
 erase, find_by_order などを使用して解くことができます.
 
+### PAST003-N
+erase, geq_min などを使用して解くことができます.
+
 ### PAST009-M
 erase, find_by_order などを使用して解くことができます.
 
