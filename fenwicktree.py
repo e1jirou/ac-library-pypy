@@ -28,7 +28,7 @@ class FenwickTree:
         assert 0 <= left <= right <= self.n
         return self.sum_left(right) - self.sum_left(left)
 
-    def lower_bound(self, x):
+    def bisect_left(self, x):
         """
         It returns max(i for i in range(n) if sum(0,i) < x).
         You can use it when all elements of the array is non-negative.
