@@ -61,34 +61,6 @@ class PivotTree:
                     break
         nd.update()
 
-    def lt_max(self, v):
-        """
-        It returns the node with the highest value among nodes whose value is less than v.
-        When there is no such node, it returns None.
-        """
-        v += 1
-        nd = self.root
-        prev = None
-        while True:
-            if v <= nd.value:
-                if nd.left:
-                    nd = nd.left
-                else:
-                    return prev
-            else:
-                prev = nd
-                if nd.right:
-                    nd = nd.right
-                else:
-                    return prev
-
-    def leq_max(self, v):
-        """
-        It returns the node with the highest value among nodes whose value is less than or equal to v.
-        When there is no such node, it returns None.
-        """
-        return self.lt_max(v + 1)
-
     def gt_min(self, v):
         """
         It returns the node with the lowest value among nodes whose value is greater than v.
@@ -118,7 +90,42 @@ class PivotTree:
         """
         return self.gt_min(v - 1)
 
-    def max_element(self):
+    def lt_max(self, v):
+        """
+        It returns the node with the highest value among nodes whose value is less than v.
+        When there is no such node, it returns None.
+        """
+        v += 1
+        nd = self.root
+        prev = None
+        while True:
+            if v <= nd.value:
+                if nd.left:
+                    nd = nd.left
+                else:
+                    return prev
+            else:
+                prev = nd
+                if nd.right:
+                    nd = nd.right
+                else:
+                    return prev
+
+    def leq_max(self, v):
+        """
+        It returns the node with the highest value among nodes whose value is less than or equal to v.
+        When there is no such node, it returns None.
+        """
+        return self.lt_max(v + 1)
+
+    def begin(self):
+        """
+        It returns the node with the lowest value.
+        When the container is empty, it returns the root.
+        """
+        return self.root.leftmost()
+
+    def rbegin(self):
         """
         It returns the node with the highest value.
         When the container is empty, it returns the root.
@@ -128,12 +135,12 @@ class PivotTree:
         else:
             return self.root
 
-    def min_element(self):
+    def min(self):
         """
-        It returns the node with the lowest value.
-        When the container is empty, it returns the root.
+        It returns the maximum value.
+        When the container is empty, it returns ((1<<self.n) - 1).
         """
-        return self.root.leftmost()
+        return self.begin().get()
 
     def max(self):
         """
@@ -143,14 +150,7 @@ class PivotTree:
         if self.root.size == 0:
             return -1
         else:
-            return self.max_element().get()
-
-    def min(self):
-        """
-        It returns the maximum value.
-        When the container is empty, it returns ((1<<self.n) - 1).
-        """
-        return self.min_element().get()
+            return self.rbegin().get()
 
     def erase(self, v, c=float("inf"), nd=None):
         """
@@ -266,12 +266,6 @@ class PivotTree:
             return nd.count
         else:
             return 0
-
-    def begin(self):
-        """
-        It returns the first node.
-        """
-        return self.min_element()
 
     def end(self):
         """

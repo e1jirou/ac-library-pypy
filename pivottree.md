@@ -35,10 +35,10 @@ pt = PivotTree(n = (1 << 60) - 2)
 ### 計算量
 - $O(\log n)$
 
-## lt_max(v) / leq_max(v) / gt_min(v) / geq_min(v)
-それぞれ値が v より小さいものの中で最大, v 以下のものの中で最大, v より大きいものの中で最小, v 以上のものの中で最小となるノードを返します.
+## gt_min(v) / geq_min(v) / lt_max(v) / leq_max(v)
+それぞれ値が v より大きいものの中で最小, v 以上のものの中で最小, v より小さいものの中で最大, v 以下のものの中で最大となるノードを返します.
 
-該当するノードが無かったとき, lt_max 及び leq_max は None を返し, gt_min 及び geq_min は木の根を返します.
+該当するノードが無かったとき, gt_min 及び geq_min は木の根を返し, lt_max 及び leq_max は None を返します.
 
 ### 制約
 - gt_min: $v < n$
@@ -47,14 +47,14 @@ pt = PivotTree(n = (1 << 60) - 2)
 ### 計算量
 - $O(\log n)$
 
-## max_element() / min_element()
+## begin() / rbegin()
 それぞれ値が最大, 最小のノードを返します.
 
 ### 計算量
 - $O(\log n)$
 
-## max() / min()
-それぞれ最大値, 最小値を返します.
+## min() / max()
+それぞれ最小値, 最大値を返します.
 
 ### 計算量
 - $O(\log n)$
