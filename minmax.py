@@ -57,6 +57,7 @@ class RemovableHeap:
         while self.removed and self.data[0] == self.removed[0]:
             heappop(self.data)
             heappop(self.removed)
+        assert self.data
         assert not self.removed or self.data[0] < self.removed[0]
         return self.data[0]
 
