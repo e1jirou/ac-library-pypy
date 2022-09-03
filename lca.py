@@ -1,15 +1,15 @@
 class LowestCommonAncestor:
-    def __init__(self, edges):
+    def __init__(self, edges, root = 0):
         self.n = len(edges)
         self.edges = edges
-        self.dfs()
+        self.dfs(root)
         self.doubling()
     
-    def dfs(self):
+    def dfs(self, root):
         parents = [-1] * self.n
         depths = [-1] * self.n
-        depths[0] = 0
-        todo = [0]
+        depths[root] = 0
+        todo = [root]
         while todo:
             a = todo.pop()
             for b in self.edges[a]:
