@@ -126,7 +126,7 @@ max, erase などを使用して解くことができます. 優先度付きキ�
 max, min, erase などを使用して解くことができます. 優先度付きキューを用いたほうが高速に解くことができます.
 
 ### ABC177-F
-erase, min などを使用して multiset の代わりになります. また, value を key, count を value として連想配列の代わりにもなります.
+erase, min などにより multiset の代わりとして使用できます. また, count の値をうまく操作することで連想配列の代わりとしても使用できます.
 
 ### ABC217-D
 lt_max, gt_min などを使用して解くことができます.
@@ -145,6 +145,9 @@ erase, find_by_order などを使用して解くことができます.
 
 ### PAST003-N
 erase, geq_min などを使用して解くことができます.
+
+### PAST006-M
+erase, lt_max などを使用して解くことができます.
 
 ### PAST009-M
 erase, find_by_order などを使用して解くことができます.
