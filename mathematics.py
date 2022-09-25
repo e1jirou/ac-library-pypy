@@ -1,4 +1,4 @@
-# divisors(12) == [1,2,3,4,6,12]
+# divisors(12) = [1,2,3,4,6,12]
 # O(sqrt(n))
 def divisors(n):
     assert 0 < n
@@ -15,7 +15,7 @@ def divisors(n):
     return res
 
 
-# prime_factorization(60) == {2:2, 3:1, 5:1}
+# prime_factorization(60) = {2:2, 3:1, 5:1}
 # O(sqrt(n))
 def prime_factorization(n):
     assert 0 < n
@@ -34,8 +34,8 @@ def prime_factorization(n):
     return res
 
 
-# prime_numbers(n) == [p | (p ∈ prime numbers) and p < n]
-# prime_numbers(11) == [2,3,5,7]
+# prime_numbers(n) = [p | (p ∈ prime numbers) and p < n]
+# prime_numbers(11) = [2,3,5,7]
 def prime_numbers(n):
     if n <= 2:
         return []
@@ -79,8 +79,8 @@ class Eratosthenes:
         return res
 
 
-# a*x + b*y == gcd(a,b)
-# ext_Euclid(a, b) == gcd(a,b), x, y
+# a*x + b*y = gcd(a,b)
+# ext_Euclid(a, b) = gcd(a,b), x, y
 def ext_Euclid(a, b):
     if 0 < b:
         gcd_ab, x, y = ext_Euclid(b, a%b)
@@ -88,7 +88,47 @@ def ext_Euclid(a, b):
     return a, 1, 0
 
 
-# floor_sum(n, m, a, b) == sum([(a*i + b)//m for i in range(n)])
+# floor_sqrt(n) = floor(sqrt(n))
+def floor_sqrt(n):
+    # Binary Search
+    left = 0
+    right = n
+    while left < right:
+        center = (left + right + 1) // 2
+        if center * center <= n:
+            left = center
+        else:
+            right = center - 1
+    return left
+
+
+# dlp_solver(a, b, mod)
+# = min(i | a^i ≡ b)
+def dlp_solver(a, b, mod):
+    # Discrete Logarithm Problem
+    # baby-step giant-step
+    a %= mod
+    b %= mod
+    m = floor_sqrt(mod) + 1
+    babies = dict()
+    pow_a = 1
+    for i in range(m):
+        if pow_a in babies:
+            break
+        babies[pow_a] = i
+        pow_a = (pow_a * a) % p
+    # inv ≡ 1 / a
+    inv = pow(a, mod - 2, mod)
+    # r ≡ 1 / a^m
+    r = pow(inv, m, mod)
+    for i in range(m):
+        if b in babies:
+            return m * i + babies[b]
+        b = b * r % p
+    return -1
+
+
+# floor_sum(n, m, a, b) = sum([(a*i + b)//m for i in range(n)])
 def floor_sum(n, m, a, b):
     assert 0 <= n
     assert 1 <= m
