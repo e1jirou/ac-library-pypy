@@ -9,9 +9,6 @@ mod を設定して畳み込みを計算します.
 ## convolution_ll
 mod を設定せずに畳み込みを計算します. PyPy では動作しません.
 
-## division
-整数演算に関するアルゴリズムの詰め合わせです.
-
 ## dsu
 Disjoint Set Union と呼ばれるデータ構造です.
 
@@ -29,6 +26,9 @@ Lowest Common Ancestor を求めます.
 
 ## matching
 最大二部マッチングを求めます.
+
+## mathematics
+整数に関するアルゴリズムの詰め合わせです.
 
 ## matrix
 行列累乗を計算します.
