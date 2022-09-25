@@ -116,7 +116,7 @@ def dlp_solver(a, b, mod):
         if pow_a in babies:
             break
         babies[pow_a] = i
-        pow_a = (pow_a * a) % p
+        pow_a = (pow_a * a) % mod
     # inv ≡ 1 / a
     inv = pow(a, mod - 2, mod)
     # r ≡ 1 / a^m
@@ -124,7 +124,7 @@ def dlp_solver(a, b, mod):
     for i in range(m):
         if b in babies:
             return m * i + babies[b]
-        b = b * r % p
+        b = b * r % mod
     return -1
 
 
