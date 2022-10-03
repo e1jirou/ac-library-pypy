@@ -58,4 +58,4 @@ Segment Tree と呼ばれるデータ構造です.
 文字列に関するアルゴリズムの詰め合わせです.
 
 ## swag
-Sliding Window Aggregatino と呼ばれるデータ構造です.
+Sliding Window Aggregation と呼ばれるデータ構造です.
