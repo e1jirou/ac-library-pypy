@@ -39,9 +39,6 @@ Lowest Common Ancestor を求めます.
 ## mincostflow
 最小費用流を求めます.
 
-## minmax
-最小値, 最大値に関するデータ構造の詰め合わせです.
-
 ## pivottree
 Pivot Tree と呼ばれるデータ構造です. pivottree.md に簡単な説明を記載しました.
 
@@ -59,3 +56,6 @@ Segment Tree と呼ばれるデータ構造です.
 
 ## string
 文字列に関するアルゴリズムの詰め合わせです.
+
+## swag
+Sliding Window Aggregatino と呼ばれるデータ構造です.
