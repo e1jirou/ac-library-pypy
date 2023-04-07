@@ -30,7 +30,7 @@ class FenwickTree:
 
     def bisect_left(self, x):
         """
-        It returns max(i for i in range(n) if sum(0,i) < x).
+        It returns max(i for i in range(n + 1) if sum(0,i) < x).
         You can use it when all elements of the array is non-negative.
         """
         s = 0
