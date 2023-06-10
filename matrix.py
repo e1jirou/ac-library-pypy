@@ -20,7 +20,7 @@ def matrix_power(a, exp):
     for i in range(n):
         res[i][i] = 1
     for i in reversed(range(exp.bit_length())):
-        res = dot(res, res, mod)
+        res = dot(res, res)
         if exp>>i & 1:
-            res = dot(res, a, mod)
+            res = dot(res, a)
     return res
