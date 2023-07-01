@@ -4,7 +4,7 @@ class LowestCommonAncestor:
         self.edges = edges
         self.dfs(root)
         self.doubling()
-    
+
     def dfs(self, root):
         parents = [-1] * self.n
         depths = [-1] * self.n
@@ -20,7 +20,7 @@ class LowestCommonAncestor:
                 todo.append(b)
         self.parents = parents
         self.depths = depths
-    
+
     def doubling(self):
         dbl = [self.parents]
         for _ in range(max(self.depths).bit_length()-1):
@@ -31,7 +31,7 @@ class LowestCommonAncestor:
                     new_parents[i] = parents[parents[i]]
             dbl.append(new_parents)
         self.dbl = dbl
-    
+
     def lca(self, a, b):
         if self.depths[a] < self.depths[b]:
             a, b = b, a
