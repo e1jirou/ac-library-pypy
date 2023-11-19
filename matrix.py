@@ -2,7 +2,7 @@ mod = 998244353
 
 def dot(a, b):
     assert len(a[0]) == len(b)
-    res = [[0] * len(a) for _ in range(len(b[0]))]
+    res = [[0] * len(b[0]) for _ in range(len(a))]
     for i in range(len(a)):
         a_i = a[i]
         for j in range(len(b[i])):
