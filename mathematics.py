@@ -67,15 +67,27 @@ class Eratosthenes:
                     self.prime.append(i)
                     break
 
-    def prime_factorization(self, n):
-        assert 0 < n < self.n
+    def prime_factorization(self, x):
+        assert 0 < x < self.n
         res = dict()
-        while 1 < n:
-            if self.sieve[n] not in res:
-                res[self.sieve[n]] = 1
+        while 1 < x:
+            if self.sieve[x] not in res:
+                res[self.sieve[x]] = 1
             else:
-                res[self.sieve[n]] += 1
-            n //= self.sieve[n]
+                res[self.sieve[x]] += 1
+            x //= self.sieve[x]
+        return res
+    
+    def divisors(self, x):
+        assert 0 < x < self.n
+        dic = self.prime_factorization(x)
+        res = [1]
+        for key, value in dic.items():
+            size = len(res)
+            res += [0] * (value * size)
+            for i in range(value):
+                for j in range(size):
+                    res[(i + 1) * size + j] = key * res[i * size + j]
         return res
 
 
