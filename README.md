@@ -1,4 +1,4 @@
-# PyPy Algorithm Library for AtCoder
+# PyPy Algorithm Library
 PyPy ユーザ向けに作成した競技プログラミング用のライブラリです.
 
 各ファイルは独立しています.
